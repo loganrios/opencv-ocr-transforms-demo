@@ -1,0 +1,7 @@
+#pragma once
+#include <filesystem>
+
+namespace config {
+    inline const std::filesystem::path assets_dir{"@ASSETS_DIR@"};
+    inline const std::filesystem::path test_image{assets_dir / "images/test.png"};
+}
