@@ -9,6 +9,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(Tesseract REQUIRED tesseract lept)
 find_package(OpenCV REQUIRED)
 
 add_executable(cvtf_demo)
@@ -16,6 +18,7 @@ add_executable(cvtf_demo)
 target_sources(cvtf_demo
     PRIVATE
         src/main.cpp
+        src/transforms.cpp
         ${CMAKE_CURRENT_BINARY_DIR}/include/config.hpp)
 
 target_compile_features(cvtf_demo
@@ -24,7 +27,8 @@ target_compile_features(cvtf_demo
 
 target_link_libraries(cvtf_demo
     PRIVATE
-        ${OpenCV_LIBS})
+        ${OpenCV_LIBS}
+        ${Tesseract_LIBRARIES})
 
 set(ASSETS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets")
 configure_file(
@@ -35,6 +39,7 @@ configure_file(
 target_include_directories(cvtf_demo
     PRIVATE
         ${OpenCV_INCLUDE_DIRS}
+        ${Tesseract_INCLUDE_DIRS}
         ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 if(MSVC)
